@@ -10,7 +10,6 @@ $ make
 # Dependencies
 
 - gcc
-- ncurses
 - libnotify
 
 # Contributions
