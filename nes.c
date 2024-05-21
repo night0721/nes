@@ -10,42 +10,51 @@
 
 #include "nes.h"
 
-void send_notification(char *content)
+static void
+send_notification(char *content)
 {
-    NotifyNotification *notification = notify_notification_new("nes", content, "dialog-information");
-    if (notification == NULL) {
-        fprintf(stderr, "nes: Cannot create notification\n");
-    }
-    if (!notify_notification_show(notification, NULL)) {
-        fprintf(stderr, "nes: Cannot show notification\n");
-    }
-    g_object_unref(G_OBJECT(notification));
+	NotifyNotification *notification = notify_notification_new("nes", content, "dialog-information");
+	if (notification == NULL) {
+		fprintf(stderr, "nes: Cannot create notification\n");
+	}
+	if (!notify_notification_show(notification, NULL)) {
+		fprintf(stderr, "nes: Cannot show notification\n");
+	}
+	g_object_unref(G_OBJECT(notification));
 }
 
-
-int main(int argc, char **argv)
+static _Noreturn
+usage(int code)
 {
-    if (argc < 2) {
-        printf("Neo Event Scheduler %s\n\nUsage: nes COMMAND\n\n", VERSION);
-        printf("list\t\tList all oncoming events\n");
-        printf("sched\t\tSchedule an event\n");
-        printf("run\t\tRun an event\n");
-        printf("edit\t\tEdit an event\n");
-        printf("search\t\t Search for an event\n");
-        exit(EXIT_FAILURE);
-    }
-    FILE *db = fopen(DATABASE_PATH, "r");
-    if (strncmp(argv[1], "list", 4) == 0) {
-        /* accept argv[2] as timerange */
+	fprintf(code ? stderr : stdout,
+		"Neo Event Scheduler %s\n\n"
+		"Usage: nes <command>\n\n"
+		"	sched <time> <title> [details]	Schedule an event\n"
+		"	edit				Edit schedule with $EDITOR\n"
+		"	list <timerange>		List all upcoming events\n"
+		"	search				Search for events\n"
+		"	run				Spawn notifier daemon\n"
+		, VERSION);
+	exit(code);
+}
 
-    } else if (strncmp(argv[1], "run", 3) == 0) {
+int
+main(int argc, char **argv)
+{
+	if (argc < 2) {
+		usage(1);
+	}
+	FILE *db = fopen(DATABASE_PATH, "r");
+	if (strcmp(argv[1], "sched") == 0) {
+		/* time can be relative or absolute */
+	} else if (strcmp(argv[1], "edit") == 0) {
+		/* spawn $EDITOR */
+	} else if (strcmp(argv[1], "list") == 0) {
+		/* accept argv[2] as timerange */
+	} else if (strcmp(argv[1], "search") == 0) {
 
-    } else if (strncmp(argv[1], "sched", 4) == 0) {
+	} else if (strcmp(argv[1], "run") == 0) {
 
-    } else if (strncmp(argv[1], "edit", 4) == 0) {
-        /* using $EDITOR */
-    } else if (strncmp(argv[1], "search", 6) == 0) {
-
-    }
-    return EXIT_FAILURE;
+	}
+	return EXIT_FAILURE;
 }
