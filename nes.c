@@ -1,8 +1,10 @@
 #define _POSIX_C_SOURCE 200809L
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
+#include <sys/inotify.h>
 
 #include <libnotify/notify.h>
 
@@ -20,6 +22,7 @@ void send_notification(char *content)
     g_object_unref(G_OBJECT(notification));
 }
 
+
 int main(int argc, char **argv)
 {
     if (argc < 2) {
@@ -31,6 +34,7 @@ int main(int argc, char **argv)
         printf("search\t\t Search for an event\n");
         exit(EXIT_FAILURE);
     }
+    FILE *db = fopen(DATABASE_PATH, "r");
     if (strncmp(argv[1], "list", 4) == 0) {
         /* accept argv[2] as timerange */
 
