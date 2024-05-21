@@ -5,17 +5,17 @@ CC = cc
 VERSION = 1.0
 TARGET = nes 
 MANPAGE = $(TARGET).1
-CONF = config.h
 PREFIX ?= /usr/local
 BINDIR = $(PREFIX)/bin
 MANDIR = $(PREFIX)/share/man/man1
 
 # Flags
-LDFLAGS = $(shell pkg-config --libs sqlite3 libnotify)
-CFLAGS = -O3 -march=native -mtune=native -pipe -s -std=c99 -pedantic -Wall -D_DEFAULT_SOURCE -D_XOPEN_SOURCE=600 $(shell pkg-config --cflags sqlite3 libnotify)
+LDFLAGS = $(shell pkg-config --libs libnotify)
+CFLAGS = -O3 -march=native -mtune=native -pipe -s -std=c99 -pedantic -Wall -D_DEFAULT_SOURCE -D_XOPEN_SOURCE=600 $(shell pkg-config --cflags libnotify)
 
 SRC = nes.c
-$(TARGET): $(SRC) $(CONF)
+
+$(TARGET): $(SRC)
 	$(CC) $(SRC) -o $@ $(CFLAGS) $(LDFLAGS)
 
 dist:
