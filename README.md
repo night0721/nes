@@ -8,7 +8,6 @@ Neo Event Scheduler(nes) is a highly scriptable calendar and scheduler.
 
 # Building
 You will need to run these with elevated privilages.
-
 ```
 $ make
 # make install
