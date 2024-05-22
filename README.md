@@ -1,15 +1,15 @@
 # nes 
 
 Neo Event Scheduler(nes) is a highly scriptable calendar and scheduler.
+
 # Build
 
-```sh
+```
 $ make
 # make install
 ```
 # Dependencies
 
-- gcc
 - libnotify
 
 # Contributions
